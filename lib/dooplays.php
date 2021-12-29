@@ -1,0 +1,334 @@
+<?php
+
+
+class doopaction extends dooplays{
+
+
+
+
+    function start_missingcrystal()
+    {
+        // show joblist
+        $page = $this->get_page("https://dooplays.xyz/qute/missing/index/show/0");
+        $tokenurl = $this->get_tokenurl($page,'act/start');
+        if($tokenurl == null)
+        {
+
+        }else{
+            $page = $this->get_page($tokenurl);
+            echo $page;
+        }
+    }
+
+
+    function buy_energyresotoreposon()
+    {
+        $url = "https://dooplays.xyz/qute/mall/index/mode/special/id/252/subpage/0/act/buy/confirm/0/src/board";
+
+       $page = $this->get_page($url);
+        $tokenurl = $this->get_tokenurl($page,'act/buy');
+        $page = $this->get_page($tokenurl);
+
+    }
+
+    function play_work_missingcrystal()
+    {
+        $this->buy_energyresotoreposon();
+        // start
+        // get targeted 4 images
+
+        $lastpage = '';
+       $dom =null;
+        $myurls = [];
+        $ansindex = [];
+        for($i =0;$i<3;$i++)
+        {
+           // echo $i;
+            $page = $this->get_page("https://dooplays.xyz/qute/missing/index/show/{$i}");
+
+            if(strpos($page,'sleeping'))
+            {
+                echo 'sleeping....';
+                exit;
+            }
+
+            if(strpos($page,'use elixir'))
+            {
+                $tokenurl = $this->get_tokenurl($page,'act/elixir');
+                $this->get_page($tokenurl);
+                return;
+            }
+
+
+            $lastpage = $page;
+            $tokenurl = $this->get_tokenurl($page,"act/next");
+            if($tokenurl == null)
+            {
+
+            }else{
+                $page = $this->get_page($tokenurl);
+               echo 'going next page';
+              return;
+            }
+            $tokenurl = $this->get_tokenurl($page,"reward/1");
+            if($tokenurl == null)
+            {
+
+            }else{
+                $page = $this->get_page($tokenurl);
+                $page = $this->get_page("https://dooplays.xyz/qute/job/index/src/missing");
+               echo 'Getting reword';
+               return;
+            }
+            $tokenurl = $this->get_tokenurl($page,'act/start');
+            if($tokenurl == null)
+            {
+
+            }else{
+                $page = $this->get_page($tokenurl);
+                echo "game starting...";
+                return;
+            }
+
+            if(strpos($page,'Not enough energy'))
+            {
+
+                //
+                $page = $this->get_page("https://dooplays.xyz/qute/job/index/act/quit/confirm/0");
+                $tokenurl = $this->get_tokenurl($page,'quit/confirm');
+                $page = $this->get_page($tokenurl);
+                $this->goto_sleep();
+                //sleep(180)
+                echo 'game done.. take 3 minute break';
+                exit();
+            }
+
+
+            $dom = str_get_html($page);
+            $images = $dom->find("//img");
+
+            foreach ($images as $image)
+            {
+                $imageurl = $image->src;
+                if(strpos($image,'missing'))
+                {
+
+                    if(strpos($imageurl,'_'))
+                    {
+                        $myurls[md5($imageurl)] = $imageurl;
+
+                    }else{
+                        $ansindex[md5($imageurl)] = [$imageurl];
+                    }
+                }
+            }
+        }
+
+        $aa = [];
+        // find ans
+        $l =0;
+        foreach ($ansindex as $key =>$nn)
+        {
+          $u = basename($nn[0]);
+          $u = substr($u,0,strpos($u,'.'));
+          $aa[$l] = 0;
+
+          foreach ($myurls as $kky => $xx)
+          {
+              $xy = basename($xx);
+
+              $xy = substr($xy,0,strpos($xy,'_'));
+              if($u == $xy)
+              {
+                  $aa[$l] = 1;
+              }
+          }
+          $l++;
+        }
+
+
+
+//,$image->parent()->href
+// get ans url
+
+        $ans = 0;
+        $p =0;
+        foreach ($aa as $ann)
+        {
+            if($ann ==0)
+            {
+                $ans = $p;
+            }
+            $p++;
+        }
+
+        $tokenurl = $this->get_tokenurl($page,"number/{$ans}?token");
+
+       // print_r($myurls);
+       // print_r($ansindex);
+      //  print_r($aa);
+
+       // echo $tokenurl;
+       $page = $this->get_page($tokenurl);
+       // echo $page;
+        // get 3 page images
+        return;
+    }
+
+
+    function goto_sleep()
+    {
+        $url = "https://dooplays.xyz/qute/creature/index/src/job";
+        $page = $this->get_page($url);
+        $tokenurl = $this->get_tokenurl($page,'act/sleep');
+        $page = $this->get_page($tokenurl);
+    }
+
+    function play_battle_arena()
+    {
+        $straturl = "https://dooplays.xyz/qute/arena/index/act/ticket/id/420/src/";
+        $nextroundurl = "https://dooplays.xyz/qute/battle/index/src/arena";
+        $skill_strongpunch = "https://dooplays.xyz/qute/battle/index/act/skill/id/7";
+        $next = "https://dooplays.xyz/qute/battle/index/act/next";
+        $skill_notmalattack = "https://dooplays.xyz/qute/battle/index/act/skill/id/1";
+        $dicline = "https://dooplays.xyz/qute/arena/index/arena/1/act/decline/src/battle";
+        $skill_decary = "https://dooplays.xyz/qute/battle/index/act/skill/id/12";
+        $skill_concontrate = "https://dooplays.xyz/qute/battle/index/act/skill/id/16";
+        $accept_quite = "https://dooplays.xyz/qute/arena/index/arena/1/act/accept/src/battle";
+
+    }
+
+    function arena_buy_silver_ticket($limit =10)
+    {
+        $url ="https://dooplays.xyz/qute/mall/index/mode/special/id/420/subpage/0/act/buy/confirm/1/src/arena?token=8aa8263dc4e7f02997bdc2c4a64f019b";
+        $page = $this->get_page($url);
+        $turl =  $this->get_tokenurl($page);
+        if($turl !== null)
+        {
+            $npage = $this->get_page($turl);
+            echo $npage;
+        }
+    }
+
+    function play_slot_machine()
+    {
+        $url ="https://dooplays.xyz/qute/slot/index/act/next?token=8ca6d2faa3651210b52840379d661c35";
+        $keepplaying = 1;
+
+        while ($keepplaying)
+        {
+           $page = $this->get_page($url);
+           $tokenurl = $this->get_tokenurl($page);
+           if($tokenurl == null)
+           {
+               $keepplaying = 0;
+           }else{
+               $url = $tokenurl;
+           }
+        }
+        echo "complete";
+
+    }
+
+}
+
+
+
+class  dooplays{
+
+    public $cookie = '';
+
+
+    function see_priyo_place()
+    {
+     return   $this->get_page('https://dooplays.xyz/qute/creature/index/src/profile');
+    }
+
+    function get_tokenurl($page,$match = 'token=')
+    {
+        $dom = str_get_html($page);
+        $pages = $dom->find("//a");
+        foreach ($pages as $urx)
+        {
+            $url = $urx->href;
+            if(strpos($url,$match))
+            {
+                return $url;
+            }
+        }
+        return null;
+    }
+    function get_page($url)
+    {
+     return   $this->func_get_content($url);
+    }
+
+    function func_get_content($myurl, $method = 'get', $posts = [], $headers = [],$encoding=0)
+    {
+
+
+        $host = parse_url(urldecode($myurl))['host'];
+        //   /*
+        if($headers == [])
+        {
+            $headers = [
+                "Host: ".$host,
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.00",
+                "Accept-Language: en-US,en;q=0.5",
+                // "Accept-Encoding: gzip, deflate, br",
+                "Connection: keep-alive",
+                "Cookie: _ga=GA1.2.2107435311.1640498022; __gads=ID=19132c62d1be0d25-22be6f8c88cf00ad:T=1640498159:RT=1640498159:S=ALNI_MZFY34cjgiKC7KNnE935dTRlhPZDw; login_key=%249236%24%242y%2410%24PwstL7MM9NhQIeX6c9uoR.xeSol.YEpplYwo6ylVN.pvxLAO84JU.; action_token=8aa8263dc4e7f02997bdc2c4a64f019b; csrf_cookie_name=5a380baad9df866d540d886d9e668bb4; _gid=GA1.2.2108182405.1640744543",
+                "Upgrade-Insecure-Requests: 1",
+                "TE: Trailers",];
+        }
+        // */
+
+        $myurl = str_replace(" ","%20",$myurl);
+        // global $range;
+        $ch = curl_init();
+
+        //  $agent = 'tab mobile';
+        // curl_setopt($ch, CURLOPT_PROXY, '85.26.146.169:80');
+        curl_setopt($ch, CURLOPT_URL, $myurl);
+        // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+
+          curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/dcookie.txt');
+          curl_setopt( $ch, CURLOPT_COOKIEFILE,dirname(__FILE__) . '/dcookie.txt');
+        //  curl_setopt($ch, CURLOPT_HEADER, true); // header
+        // curl_setopt($ch, CURLOPT_NOBODY, true); // header
+        curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
+        //  curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_RANGE, $range);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch,CURLOPT_TIMEOUT , 60);
+        # sending manually set cookie
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if($method != 'get')
+        {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($posts));
+        }
+
+        //  curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"serialno\":\"$code\"}");
+
+
+        //   $error = curl_error($ch);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        if($encoding)
+        {
+            return mb_convert_encoding($result, 'utf-8','auto');
+        }
+
+        // debug
+        //  file_put_contents($this->ROOT.'/webpage.txt',$result);
+
+        return $result;
+        //  return mb_convert_encoding($result, 'UTF-8','auto');
+    }
+
+}
+
+
