@@ -277,7 +277,7 @@ class  dooplays{
                 "Accept-Language: en-US,en;q=0.5",
                 // "Accept-Encoding: gzip, deflate, br",
                 "Connection: keep-alive",
-                "Cookie: _ga=GA1.2.2107435311.1640498022; __gads=ID=19132c62d1be0d25-22be6f8c88cf00ad:T=1640498159:RT=1640498159:S=ALNI_MZFY34cjgiKC7KNnE935dTRlhPZDw; login_key=%249236%24%242y%2410%24PwstL7MM9NhQIeX6c9uoR.xeSol.YEpplYwo6ylVN.pvxLAO84JU.; action_token=8aa8263dc4e7f02997bdc2c4a64f019b; csrf_cookie_name=5a380baad9df866d540d886d9e668bb4; _gid=GA1.2.2108182405.1640744543",
+                "Cookie: ADD_YOUR_COOKIE_HERE",
                 "Upgrade-Insecure-Requests: 1",
                 "TE: Trailers",];
         }
