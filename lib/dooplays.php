@@ -238,6 +238,10 @@ class  dooplays{
 
     public $cookie = '';
 
+    function __construct($cookie)
+    {
+        $this->cookie = $cookie;
+    }
 
     function see_priyo_place()
     {
@@ -277,7 +281,7 @@ class  dooplays{
                 "Accept-Language: en-US,en;q=0.5",
                 // "Accept-Encoding: gzip, deflate, br",
                 "Connection: keep-alive",
-                "Cookie: ADD_YOUR_COOKIE_HERE",
+                "Cookie: {$this->cookie}",
                 "Upgrade-Insecure-Requests: 1",
                 "TE: Trailers",];
         }
