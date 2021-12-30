@@ -33,7 +33,7 @@ class doopaction extends dooplays{
 
     function play_work_missingcrystal()
     {
-        $this->buy_energyresotoreposon();
+       // $this->buy_energyresotoreposon();
         // start
         // get targeted 4 images
 

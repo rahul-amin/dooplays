@@ -17,6 +17,7 @@ $doop = new doopaction($COOKIE_STRING);
 
 //echo $doop->arena_buy_silver_ticket();
 
+$doop->buy_energyresotoreposon();
 
 for ($i = 0;$i<100;$i++)
 {
