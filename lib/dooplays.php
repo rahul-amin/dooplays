@@ -196,6 +196,128 @@ class doopaction extends dooplays{
         $skill_concontrate = "https://dooplays.xyz/qute/battle/index/act/skill/id/16";
         $accept_quite = "https://dooplays.xyz/qute/arena/index/arena/1/act/accept/src/battle";
 
+        // buy ticket
+        $ticketpage = $this->get_page('https://dooplays.xyz/qute/mall/index/mode/special/id/420/subpage/0/act/buy/confirm/0/src/board');
+        $buytiurl = $this->get_tokenurl($ticketpage,'buy/confirm');
+        $this->get_page($buytiurl);
+
+        //begin
+        $xpage = $this->get_page('https://dooplays.xyz/qute/arena/index/act/ticket/id/420/src/battle');
+        $keeploop =1;
+        $next_url = $nextroundurl;
+
+        $i =0;
+        while ($keeploop)
+        {
+            $i++;
+            if($i > 65)
+            {
+                $keeploop =0;
+                $this->get_page($accept_quite);
+                $this->get_page('https://dooplays.xyz/qute/arena/index/act/quit/confirm/1/src/creature');
+
+            }
+
+
+
+
+
+            echo $next_url .'<br/>';
+            $xpage = $this->get_page($next_url);
+            $fskillurl = $this->get_tokenurl($xpage,'act/skill');
+            if($fskillurl == null)
+            {
+
+            }else{
+                $next_url = $fskillurl;
+                continue;
+            }
+
+            if(strpos($xpage,'cool.gif')>0)
+            {
+                $rurl = $this->get_tokenurl($xpage,'act/accept');
+                if($rurl == null)
+                {
+
+                }else{
+                    $next_url = $rurl;
+                    $this->get_page($rurl);
+                    $keeploop = 0; // battle end
+                    continue;
+                }
+            }
+
+
+            $rurl = $this->get_tokenurl($xpage,'battle/index/src/arena');
+            if($rurl == null)
+            {
+
+            }else{
+                $next_url = $rurl;
+                continue;
+            }
+
+            $rurl = $this->get_tokenurl($xpage,'index/act/next');
+            if($rurl == null)
+            {
+
+            }else{
+                $next_url = $rurl;
+                continue;
+            }
+
+            $rurl = $this->get_tokenurl($xpage,'ticket/id/420');
+            if($rurl == null)
+            {
+
+            }else{
+                $next_url = $rurl;
+                continue;
+            }
+
+
+            $rurl = $this->get_tokenurl($xpage,'act/decline');
+            if($rurl == null)
+            {
+
+            }else{
+                $next_url = $rurl;
+                continue;
+            }
+
+            $rurl = $this->get_tokenurl($xpage,'act/accept');
+            if($rurl == null)
+            {
+
+            }else{
+                $next_url = $rurl;
+                $this->get_page($rurl);
+                $keeploop = 0; // battle end
+                continue;
+            }
+
+
+            if($i > 70)
+            {
+                $keeploop =0;
+                $this->get_page($accept_quite);
+                $this->get_page('https://dooplays.xyz/qute/arena/index/act/quit/confirm/1/src/creature');
+            }
+        }
+    }
+
+    function arena_firstskill($page)
+    {
+        $fskillurl = $this->get_tokenurl($page,'act/skill');
+        $page = $this->get_page($fskillurl);
+        $nextp = $this->get_page('https://dooplays.xyz/qute/battle/index/act/next');
+        $turl = $this->get_tokenurl($nextp,'act/accept');
+        if($turl == null)
+        {
+
+        }else{
+
+        }
     }
 
     function arena_buy_silver_ticket($limit =10)
