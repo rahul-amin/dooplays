@@ -5,6 +5,23 @@ class doopaction extends dooplays{
 
 
 
+    function send_trophy()
+    {
+        // only max trophy will send
+
+        // get trophy list
+        $page = $this->get_page('https://dooplays.xyz/qute/trophy/index/act/select/src/board');
+
+        $tokenurl = $this->get_tokenurl($page,'select/id/236');
+        if($tokenurl == null)
+        {
+            echo 'no trophy';
+        }else{
+            $this->get_page($tokenurl);
+        }
+
+    }
+
 
     function start_missingcrystal()
     {
