@@ -5,6 +5,10 @@ How to use ?
 first add your single line cookie file.
 then run this script
 
+## for send trophy
+index.php?sendtrophy=1 
+run every 1 minute...
+
 ## for battle arena
 index.php?arena=1
 run every 1 minute
