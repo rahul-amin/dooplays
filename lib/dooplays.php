@@ -12,6 +12,9 @@ class doopaction extends dooplays{
         // get trophy list
         $page = $this->get_page('https://dooplays.xyz/qute/trophy/index/act/select/src/board');
 
+        $scnd = $this->trophy_get_seconds($page);
+            sleep($scnd);
+
         $tokenurl = $this->get_tokenurl($page,'select/id/236');
         if($tokenurl == null)
         {
@@ -20,6 +23,17 @@ class doopaction extends dooplays{
             $this->get_page($tokenurl);
         }
 
+    }
+
+
+    function trophy_get_seconds($page)
+    {
+        $ptrn = "|again after (\d+) seconds|";
+        if(preg_match($ptrn,$page,$mtc))
+        {
+            return  $mtc[1];
+        }
+        return 1;
     }
 
 
@@ -42,7 +56,7 @@ class doopaction extends dooplays{
     {
         $url = "https://dooplays.xyz/qute/mall/index/mode/special/id/252/subpage/0/act/buy/confirm/0/src/board";
 
-       $page = $this->get_page($url);
+        $page = $this->get_page($url);
         $tokenurl = $this->get_tokenurl($page,'act/buy');
         $page = $this->get_page($tokenurl);
 
@@ -50,17 +64,17 @@ class doopaction extends dooplays{
 
     function play_work_missingcrystal()
     {
-       // $this->buy_energyresotoreposon();
+        // $this->buy_energyresotoreposon();
         // start
         // get targeted 4 images
 
         $lastpage = '';
-       $dom =null;
+        $dom =null;
         $myurls = [];
         $ansindex = [];
         for($i =0;$i<3;$i++)
         {
-           // echo $i;
+            // echo $i;
             $page = $this->get_page("https://dooplays.xyz/qute/missing/index/show/{$i}");
 
             if(strpos($page,'sleeping'))
@@ -84,8 +98,8 @@ class doopaction extends dooplays{
 
             }else{
                 $page = $this->get_page($tokenurl);
-               echo 'going next page';
-              return;
+                echo 'going next page';
+                return;
             }
             $tokenurl = $this->get_tokenurl($page,"reward/1");
             if($tokenurl == null)
@@ -94,8 +108,8 @@ class doopaction extends dooplays{
             }else{
                 $page = $this->get_page($tokenurl);
                 $page = $this->get_page("https://dooplays.xyz/qute/job/index/src/missing");
-               echo 'Getting reword';
-               return;
+                echo 'Getting reword';
+                return;
             }
             $tokenurl = $this->get_tokenurl($page,'act/start');
             if($tokenurl == null)
@@ -146,21 +160,21 @@ class doopaction extends dooplays{
         $l =0;
         foreach ($ansindex as $key =>$nn)
         {
-          $u = basename($nn[0]);
-          $u = substr($u,0,strpos($u,'.'));
-          $aa[$l] = 0;
+            $u = basename($nn[0]);
+            $u = substr($u,0,strpos($u,'.'));
+            $aa[$l] = 0;
 
-          foreach ($myurls as $kky => $xx)
-          {
-              $xy = basename($xx);
+            foreach ($myurls as $kky => $xx)
+            {
+                $xy = basename($xx);
 
-              $xy = substr($xy,0,strpos($xy,'_'));
-              if($u == $xy)
-              {
-                  $aa[$l] = 1;
-              }
-          }
-          $l++;
+                $xy = substr($xy,0,strpos($xy,'_'));
+                if($u == $xy)
+                {
+                    $aa[$l] = 1;
+                }
+            }
+            $l++;
         }
 
 
@@ -181,13 +195,13 @@ class doopaction extends dooplays{
 
         $tokenurl = $this->get_tokenurl($page,"number/{$ans}?token");
 
-       // print_r($myurls);
-       // print_r($ansindex);
-      //  print_r($aa);
+        // print_r($myurls);
+        // print_r($ansindex);
+        //  print_r($aa);
 
-       // echo $tokenurl;
-       $page = $this->get_page($tokenurl);
-       // echo $page;
+        // echo $tokenurl;
+        $page = $this->get_page($tokenurl);
+        // echo $page;
         // get 3 page images
         return;
     }
@@ -356,14 +370,14 @@ class doopaction extends dooplays{
 
         while ($keepplaying)
         {
-           $page = $this->get_page($url);
-           $tokenurl = $this->get_tokenurl($page);
-           if($tokenurl == null)
-           {
-               $keepplaying = 0;
-           }else{
-               $url = $tokenurl;
-           }
+            $page = $this->get_page($url);
+            $tokenurl = $this->get_tokenurl($page);
+            if($tokenurl == null)
+            {
+                $keepplaying = 0;
+            }else{
+                $url = $tokenurl;
+            }
         }
         echo "complete";
 
@@ -384,7 +398,7 @@ class  dooplays{
 
     function see_priyo_place()
     {
-     return   $this->get_page('https://dooplays.xyz/qute/creature/index/src/profile');
+        return   $this->get_page('https://dooplays.xyz/qute/creature/index/src/profile');
     }
 
     function get_tokenurl($page,$match = 'token=')
@@ -403,7 +417,7 @@ class  dooplays{
     }
     function get_page($url)
     {
-     return   $this->func_get_content($url);
+        return   $this->func_get_content($url);
     }
 
     function func_get_content($myurl, $method = 'get', $posts = [], $headers = [],$encoding=0)
@@ -435,8 +449,8 @@ class  dooplays{
         curl_setopt($ch, CURLOPT_URL, $myurl);
         // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
-          curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/dcookie.txt');
-          curl_setopt( $ch, CURLOPT_COOKIEFILE,dirname(__FILE__) . '/dcookie.txt');
+        curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/dcookie.txt');
+        curl_setopt( $ch, CURLOPT_COOKIEFILE,dirname(__FILE__) . '/dcookie.txt');
         //  curl_setopt($ch, CURLOPT_HEADER, true); // header
         // curl_setopt($ch, CURLOPT_NOBODY, true); // header
         curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
