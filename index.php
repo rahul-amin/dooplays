@@ -21,12 +21,8 @@ $doop = new doopaction($COOKIE_STRING);
 
 if(isset($_REQUEST['sendtrophy']))
 {
-    ini_set('max_execution_time',120);
-    for ($i =0;$i<1;$i++)
-    {
-        $doop->send_trophy();
-        sleep(60);
-    }
+    ini_set('max_execution_time',65);
+    $doop->send_trophy();
     echo 'trophy sending.....';
 }
 
@@ -35,13 +31,13 @@ if(isset($_REQUEST['arena']))
 {
     $doop->play_battle_arena();
     echo 'arena complete';
-   // exit;
+    // exit;
 }
 if(isset($_REQUEST['slot']))
 {
     $doop->play_slot_machine();
     echo 'slot machine playing complete';
-   // exit();
+    // exit();
 }
 
 //echo $doop->arena_buy_silver_ticket();
@@ -53,7 +49,7 @@ if(isset($_REQUEST['trophy']))
         $doop->play_work_missingcrystal();
         echo "{$i}\n";
     }
-  //  exit;
+    //  exit;
 }
 
 
